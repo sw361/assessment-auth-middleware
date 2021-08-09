@@ -1,24 +1,23 @@
-import { Jwt } from 'jsonwebtoken'
-import * as express from 'express'
+import express from 'express'
+import dotenv from 'dotenv'
 
-declare module 'express' {
-  interface Request {
-    user?: Jwt
-  }
-}
+import createRouter from './routes'
+import chalk from 'chalk'
 
-export interface Options {
-  issuer: string
-  audience: string
-  algorithms: string
-}
+import { exposeServices } from '@utils'
 
-const authorize =
-  (options: Options) =>
-  async (
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction,
-  ): Promise<void | express.Response> => Promise.reject('Not implemented')
+dotenv.config({ path: '../.env' })
 
-export default authorize
+const app = express()
+const port = process.env.PORT || 3000
+
+const router = createRouter()
+
+app.use('/api', exposeServices, router)
+
+/* istanbul ignore next */
+app.listen(port, () => {
+  console.info(
+    chalk.blueBright(`Example app listening at http://localhost:${port}`),
+  )
+})

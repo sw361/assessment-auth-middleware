@@ -12,6 +12,14 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "typeRoots": ["./src/@types", "./node_modules/@types"],
+    "paths": {
+      "@utils": ["src/utils"],
+      "@types": ["./src/types"],
+      "@endpoints": ["./src/endpoints"],
+      "@services": ["./src/services"]
+    }
+  },
+  "include": ["./src", "src/utils"]
 }
